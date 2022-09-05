@@ -1,0 +1,27 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">All Treatments </h2>
+    </div>
+    <div class="card-body">
+
+  
+
+<% @treatments.each do |treatment| %>
+    <p> treatment Title : <%=  treatment.name %> </p>
+    <p> Price : <%= treatment.price  %> </p>
+    
+    <p> <%= link_to "Edit Treatment" , edit_hospital_treatment_path(@hospital.id, treatment) %> |
+     <%= link_to 'Delete', hospital_treatment_path(params[:hospital_id], treatment), method: :delete, data: {confirm: 'Are you sure?'} %>  
+     </p>
+     <div class="col-md-12 bg-light text-right">
+             <%= link_to "Assign this Treatment in this Hospital"  , hospital_treatment_path(@hospital.id , treatment) ,class: "btn btn-primary" %>
+        </div>
+    <hr />
+    <% end%>
+
+    <p> <%= link_to "Add Treatment" , new_hospital_treatment_path %></p>
+   
+     </div>
+      </div>
+       </div>

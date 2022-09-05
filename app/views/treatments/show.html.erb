@@ -1,0 +1,70 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Specific Treatment</h2>
+    </div>
+    <div class="card-body">
+
+    <% if @treatment.errors.any? %>
+        <h2> Errors </h2>
+        <ul>
+        <% @treatment.errors.full_messages.each do |message| %>
+            <li> <%= message %></li>
+            <% end %>
+            </ul>
+            <% end %>
+
+    <h2>Treatment ID : <%= @treatment.id  %> </h2>
+    <p>  Treatment Name : <%= @treatment.name %> </p>
+     <p>  Treatment Price : <%= @treatment.price  %> </p>
+
+      <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">User Name</th>
+      <th scope="col">User Type</th>
+      <th scope="col">Assign Hospital and this Treatment</th>
+    </tr>
+  </thead>
+  <tbody>
+
+   <% User.all.each do |user| %>
+
+    <% if (user.user_type == "Doctor") %>
+         <% if user.hospital_treatments_id == nil%>
+        <tr>
+        <td> <%=user.id%> </td>
+        <td> <%=user.name%> </td>
+        <td> <%=user.user_type%> </td>
+         <td><%= link_to "Assign this Treatment and this Hospital to Doctor"  , assignDoctor_path(@hospital , @treatment , user) ,class: "btn btn-primary" %></td>
+        </tr>
+        <% end %>
+
+        <% if user.hospital_treatments_id != nil%>
+          <% userAlredayAssign = HospitalTreatment.find(user.hospital_treatments_id)%>
+          <% if userAlredayAssign.hospital_id == @hospital.id && userAlredayAssign.treatment_id == @treatment.id%> 
+            <tr>
+        <td> <%=user.id%> </td>
+        <td> <%=user.name%> </td>
+        <td> <%=user.user_type%> </td>
+         <td><%= link_to "Remove this Treatment and this Hospital to Doctor"  , assignDoctor_path(@hospital , @treatment , user) ,class: "btn btn-danger" %></td>
+        </tr>
+          <% end %>
+        <% end %>
+       
+
+
+        <% end %>
+
+
+
+        <% end %> 
+        </tbody>
+</table>
+    
+    
+
+      </div>
+    </div>
+    </div>

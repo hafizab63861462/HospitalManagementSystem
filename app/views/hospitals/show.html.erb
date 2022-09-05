@@ -1,0 +1,34 @@
+ 
+ <div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Specific Hospital</h2>
+    </div>
+    <div class="card-body">
+
+    <% if @hospital.errors.any? %>
+          <h2> Errors </h2>
+          <ul>
+          <% @hospital.errors.full_messages.each do |message| %>
+            <li> <%= message %></li>
+            <% end %>
+          </ul>
+          <% end %>
+
+          
+    <h2> Name :<%= @hospital.name  %></h2>
+    <p>  City :<%= @hospital.city  %> </p>
+    <p>  Address :<%= @hospital.address  %> </p>
+    <hr />
+     <p> <%= link_to "Add Treatment" , new_hospital_treatment_path(@hospital) %> |
+     <%= link_to "Show All Treatments" , hospital_treatments_path(@hospital) %> 
+          
+    </div>
+    </div>
+    </div>
+
+    <script>
+   
+    </script>
+ 
+ 

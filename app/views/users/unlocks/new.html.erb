@@ -1,0 +1,30 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Resend unlock instructions</h2>
+    </div>
+    <div class="card-body">
+    
+
+<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Resend unlock instructions" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
+
+
+        </div>
+  </div>
+</div>
+
+
+

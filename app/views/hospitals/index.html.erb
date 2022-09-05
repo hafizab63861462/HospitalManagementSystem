@@ -1,0 +1,45 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">My Hospitals</h2>
+    </div>
+    <div class="card-body">
+
+
+    <% if can? :manage , Hospital %>
+
+    <% @hospitals.each do |hospital| %>
+    <h2> Name : <%=link_to hospital.name , hospital%></h2>
+    <p>  City : <%= hospital.city  %> </p>
+    <p>  Address : <%= hospital.address  %> </p>
+    <p> <%= link_to "Edit hospital" , edit_hospital_path(hospital) %> |
+         <%= link_to "Delete hospital" , hospital , :confirm => "Are you Sure ?" , :method => :delete  %>  
+     </p>
+    <hr />
+    <% end%>
+
+        <p> <%= link_to "Add Hospital" , new_hospital_path%></p>
+
+      <% end %>
+
+       <% if ( (can? :read , Hospital ) && ( current_user.hospital_treatments_id != nil) ) %>
+          <% userHospital = HospitalTreatment.find(current_user.hospital_treatments_id) %>
+          <%  hospital = Hospital.find(userHospital.hospital_id) %>
+          <% userTreatment = Treatment.find(userHospital.treatment_id) %>
+          <h2> Your Hospital Name is : <%= hospital.name%></h2>
+          <p>  City : <%= hospital.city  %> </p>
+          <p>  Address : <%= hospital.address  %> </p>
+
+
+        <h2>  You are the Doctor of : <%= userTreatment.name %> </h2>
+         <p>  Your Treatment Price : <%= userTreatment.price  %> </p>
+
+
+          <p> <%= link_to "My Request" , requests_path , class: "btn btn-primary"%></p>
+        <% end %>
+
+
+
+     </div>
+      </div>
+       </div>

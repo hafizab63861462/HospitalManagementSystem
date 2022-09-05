@@ -1,0 +1,21 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Receive Request from Patient</h2>
+    </div>
+    <div class="card-body">
+   
+    <% myRequest = Request.where(user_id: current_user.id)%>
+     <% myRequest.all.each do |request|%>
+        <% if request.status == 'pending' %>
+        <p> Patien Name : <%= User.find(request.patient_id).name  %> </p>
+        <p> My id : <%= current_user.id %> </p>
+        <td><%= link_to 'Accept Request', edit_request_path(request) , class: 'btn btn-success' %></td>
+        <td><%= link_to 'Reject Request', request , :method => :delete , class: 'btn btn-danger' %></td>
+        <hr>
+        <% end %>
+     <% end %>
+
+    </div>
+      </div>
+       </div>

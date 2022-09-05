@@ -1,0 +1,85 @@
+
+<div class="col-lg-6 mx-lg-auto">
+<div class="card shadow">
+  <div class="card-header">
+  <% if current_user.user_type == 'admin'%>
+    <h2 class="card-title text-center">All Doctors who Sign Up</h2>
+    <% else %>
+    <h2 class="card-title text-center">All Doctors who Provide Treatments</h2>
+  <% end %>
+  </div>
+  <div class="card-body">
+
+ <% if current_user.user_type == 'admin'%>
+  <table class="table">
+<thead class="thead-dark">
+  <tr>
+    <th scope="col">User ID</th>
+    <th scope="col">User Name</th>
+    <th scope="col">User Type</th>
+    <th scope="col">Your Created Hospitals</th>
+  </tr>
+</thead>
+<tbody>
+
+ <% User.all.each do |user| %>
+
+  <% if (user.user_type == "Doctor" && user.hospital_treatments_id == nil) %>
+      <tr>
+      <td> <%=user.id%> </td>
+      <td> <%=user.name%> </td>
+      <td> <%=user.user_type%> </td>
+      <td><%= link_to 'Avaliable Hospital', hospitals_path , class: 'nav-link active' %></td>
+      </tr>
+      <% end %>
+      <% end %> 
+      </tbody>
+</table>
+  <% end %>
+
+   <% if current_user.user_type == 'Patient'%>
+  <table class="table">
+<thead class="thead-dark">
+  <tr>
+    <th scope="col">User Name</th>
+    <th scope="col">User Type</th>
+    <th scope="col">Treatment / Price</th>
+    <th scope="col">Send Request</th>
+    <th scope="col">Request Status</th>
+  </tr>
+</thead>
+<tbody>
+
+ <% User.all.each do |user| %>
+
+  <% if (user.user_type == "Doctor" && user.hospital_treatments_id != nil) %>
+     <% hospitaltreatment = HospitalTreatment.find(user.hospital_treatments_id)%>
+     <% doctorTreatment = Treatment.find(hospitaltreatment.treatment_id) %>
+     <% request = Request.where(user_id: user.id , patient_id: current_user.id).last %>
+      <tr>
+      <td> <%=user.name%> </td>
+      <td> <%=user.user_type%> </td>
+
+      <td> <%=doctorTreatment.name%> and it's Price is <%=doctorTreatment.price%> </td>
+
+      <% if request == nil || request.status != 'pending'%>
+      <td><%= link_to 'Send Request', new_request_path(user) , class: 'nav-link active' %></td>
+      <% else %>
+      <td><%= link_to 'Remove Request', new_request_path(user) , class: 'nav-link active' %></td>
+      <% end %>
+        <td>  <%= request.status if request %> </td>
+      </tr>
+      <% end %>
+      <% end %> 
+      </tbody>
+</table>
+  <% end %>
+
+
+
+
+
+
+      </div>
+</div>
+</div>

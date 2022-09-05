@@ -1,0 +1,37 @@
+<div class="col-lg-6 mx-lg-auto">
+  <div class="card shadow">
+    <div class="card-header">
+      <h2 class="card-title text-center">Create Treatments</h2>
+    </div>
+    <div class="card-body">
+    
+     <%= form_for([@hospital, @treatment]) do |f| %>
+    <% if @treatment.errors.any? %>
+        <h2> Errors </h2>
+        <ul>
+        <% @treatment.errors.full_messages.each do |message| %>
+            <li> <%= message %></li>
+            <% end %>
+            </ul>
+            <% end %>
+
+            <div class="form-group mb-2">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "form-control form-control-lg" %>
+            </div>
+
+
+            <div class="form-group mb-2">
+            <%= f.label :price %>
+            <%= f.text_field :price, class: "form-control form-control-lg" %>
+            </div>
+
+
+            <div class="actions">
+            <%= f.submit "Add Treatment" , class: "btn btn-lg btn-primary" %>
+            </div>
+            <% end %>
+
+    </div>
+     </div>
+      </div>
